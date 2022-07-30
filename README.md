@@ -1,0 +1,1 @@
+A mini microservice blog for learning purposes
