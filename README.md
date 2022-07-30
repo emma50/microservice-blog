@@ -1,1 +1,1 @@
-A mini microservice blog for learning purposes
+A mini microservice blog for learning purposes using docker for containerization, kubernetes to scale containers, kubernetes nginx as load balancer and skaffold to automate Local Kubernetes Development. 
