@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: # Describes the deployment 
+  name: comments-depl # Name of deployment
+spec:
+  replicas: 1 # Create one pod
+  selector: #  A selector for the deployment to apply to the pod that the deployment is describing
+    matchLabels: # What pod the deployment is applied to
+      app: comments
+  template: # This is a pod template. It describes a pod that is launched
+    metadata: # Describes the pod
+      labels: # label for the pod that the deployment is deploying
+        app: comments
+    spec:
+      containers:
+      - name: comments
+        image: ikechukwu1903/comments
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: comments-srv # Name of service
+spec:
+  type: ClusterIP # Type of service
+  selector:
+    app: comments # Selects all pods named comments
+  ports:
+    - name: comments
+      protocol: TCP
+      port: 4001
+      targetPort: 4001

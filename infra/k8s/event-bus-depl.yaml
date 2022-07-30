@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: # Describes the deployment 
+  name: event-bus-depl # Name of deployment
+spec:
+  replicas: 1 # Create one pod
+  selector: #  A selector for the deployment to apply to the pod that the deployment is describing
+    matchLabels: # What pod the deployment is applied to
+      app: event-bus
+  template: # This is a pod template. It describes a pod that is launched
+    metadata: # Describes the pod
+      labels: # label for the pod that the deployment is deploying
+        app: event-bus
+    spec:
+      containers:
+      - name: event-bus
+        image: ikechukwu1903/event-bus
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-bus-srv # Name of service
+spec:
+  type: ClusterIP # Type of service
+  selector:
+    app: event-bus # Selects all pods named eveny-bus
+  ports:
+    - name: event-bus
+      protocol: TCP
+      port: 4005
+      targetPort: 4005

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: # Describes the deployment 
+  name: posts-depl # Name of deployment
+spec:
+  replicas: 1 # Create one pod
+  selector: #  A selector for the deployment to apply to the pod that the deployment is describing
+    matchLabels: # What pod the deployment is applied to
+      app: posts
+  template: # This is a pod template. It describes a pod that is launched
+    metadata: # Describes the pod
+      labels: # label for the pod that the deployment is deploying
+        app: posts
+    spec:
+      containers:
+      - name: posts
+        image: ikechukwu1903/posts
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-clusterip-srv # Name of service
+spec:
+  type: ClusterIP # Type of service
+  selector:
+    app: posts # Selects all pods named posts
+  ports:
+    - name: posts
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

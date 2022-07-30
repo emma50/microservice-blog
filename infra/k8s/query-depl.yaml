@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: # Describes the deployment 
+  name: query-depl # Name of deployment
+spec:
+  replicas: 1 # Create one pod
+  selector: #  A selector for the deployment to apply to the pod that the deployment is describing
+    matchLabels: # What pod the deployment is applied to
+      app: query
+  template: # This is a pod template. It describes a pod that is launched
+    metadata: # Describes the pod
+      labels: # label for the pod that the deployment is deploying
+        app: query
+    spec:
+      containers:
+      - name: query
+        image: ikechukwu1903/query
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: query-srv # Name of service
+spec:
+  type: ClusterIP # Type of service
+  selector:
+    app: query # Selects all pods named query
+  ports:
+    - name: query
+      protocol: TCP
+      port: 4002
+      targetPort: 4002

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: # Describes the deployment 
+  name: client-depl # Name of deployment
+spec:
+  replicas: 1 # Create one pod
+  selector: #  A selector for the deployment to apply to the pod that the deployment is describing
+    matchLabels: # What pod the deployment is applied to
+      app: client
+  template: # This is a pod template. It describes a pod that is launched
+    metadata: # Describes the pod
+      labels: # label for the pod that the deployment is deploying
+        app: client
+    spec:
+      containers:
+      - name: client
+        image: ikechukwu1903/client
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-srv # Name of service
+spec:
+  type: ClusterIP # Type of service
+  selector:
+    app: client # Selects all pods named client
+  ports:
+    - name: client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
